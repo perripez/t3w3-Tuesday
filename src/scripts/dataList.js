@@ -59,6 +59,18 @@ function removeCostumeFromDataList(targetItemToRemove){
 
 function addCostumeToDataList(event, targetInputId) {
 
+    // Find the form element that needs validation
+    let formElement = document.getElementById("costumesInputForm");
+
+    // Use the form element.checkValidity() method to save the result
+    let isFormValid = formElement.checkValidity();
+
+    // Do a conditional based on the result
+    if (!isFormValid){
+        formElement.reportValidity();
+        return;
+    }
+
     // Prevent the form from doing defult behaviour (refreshing page)
     event.preventDefault();
     console.log("Add costume to the list function is running!")
@@ -75,11 +87,18 @@ function addCostumeToDataList(event, targetInputId) {
     // Clear input field after submit
     targetTextInput.value = "";
 
+    // Focus on the text field to enable quick data entry
+    targetTextInput.focus();
+
+    // Alert after submit
+    alert("Submitted a new entry: " + dataArray[dataArray.length - 1]);
+
     // renderData function call to update the page
     renderData();
+
 }
 
 // Find the form from the event
 // Add funtion outside of function -> only executes once, not every time function runs
-let formInputButton = document.getElementById("costumesInputForm");
-formInputButton.addEventListener("submit", (event) => addCostumeToDataList(event, "costumeInputText"));
+let formInputButton = document.getElementById("formInputButton");
+formInputButton.addEventListener("click", (event) => addCostumeToDataList(event, "costumeInputText"));
